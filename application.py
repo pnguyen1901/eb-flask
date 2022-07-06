@@ -1,8 +1,12 @@
 from flask import Flask
+import os
+
+endpoint = os.environ["API_ENDPOINT"]
 
 
 def say_hello(username="World"):
-    return "<p>Hello %s!</p>\n" % username
+
+    return "<p>Hello %s! Let's get started. %s</p>\n" % (username, endpoint)
 
 
 # some bits of text for the page.
