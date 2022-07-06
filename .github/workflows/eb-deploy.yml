@@ -2,13 +2,23 @@ name: eb-pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [dev, main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set env vars (dev)
+        if: endsWith(github.ref, '/dev')
+        run: |
+          echo "EB_ENV=chris-flask-app-dev" >> $GITHUB_ENV
+
+      - name: Set env vars (prod)
+        if: endsWith(github.ref, '/main')
+        run: |
+          echo "EB_ENV=chris-flask-app-prod" >> $GITHUB_ENV
+
       - uses: actions/checkout@v2
 
       - name: Create ZIP deployment package
@@ -32,8 +42,8 @@ jobs:
           --version-label "ver-${{ github.sha }}" \
           --description "commit-sha-${{ github.sha }}"
 
-      - name:
+      - name: Update prod environment with new application version]
         run: |
           aws elasticbeanstalk update-environment \
-          --environment-name chris-flask-app-prod \
+          --environment-name ${{ env.EB_ENV }} \
           --version-label "ver-${{ github.sha }}"

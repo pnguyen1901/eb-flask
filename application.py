@@ -6,12 +6,12 @@ endpoint = os.environ["API_ENDPOINT"]
 
 def say_hello(username="World"):
 
-    return "<p>Hello %s! Let's get started. %s</p>\n" % (username, endpoint)
+    return "<p>Hello %s! This is awesome. %s</p>\n" % (username, endpoint)
 
 
 # some bits of text for the page.
 header_text = """
-    <html>\n<head> <title>Prod Env</title> </head>\n<body>"""
+    <html>\n<head> <title>Env</title> </head>\n<body>"""
 instructions = """
     <p><em>Hint</em>: This is a RESTful web service! Append a username
     to the URL (for example: <code>/Thelonious</code>) to say hello to
